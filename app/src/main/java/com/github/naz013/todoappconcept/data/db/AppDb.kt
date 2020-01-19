@@ -5,17 +5,23 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.github.naz013.todoappconcept.data.Event
+import com.github.naz013.todoappconcept.data.Folder
 import com.github.naz013.todoappconcept.data.dao.EventDao
+import com.github.naz013.todoappconcept.data.dao.FolderDao
+import com.github.naz013.todoappconcept.data.dao.FolderWithEventDao
 
 @Database(
     entities = [
-        Event::class
+        Event::class,
+        Folder::class
     ],
     version = 1, exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
 
     abstract fun eventDao(): EventDao
+    abstract fun folderDao(): FolderDao
+    abstract fun folderWithEventsDao(): FolderWithEventDao
 
     companion object {
 

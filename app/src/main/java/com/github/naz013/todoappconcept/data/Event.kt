@@ -18,7 +18,8 @@ data class Event(
     var createAt: String? = null,
     var dueDate: String? = null,
     var dueTime: String? = null,
-    var state: EventState = EventState.ACTIVE
+    var state: EventState = EventState.ACTIVE,
+    var folderId: String? = null
 )
 
 enum class EventState {

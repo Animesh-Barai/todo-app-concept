@@ -11,6 +11,14 @@ class DbModule {
 
     @Singleton
     @Provides
+    fun provideFolderWithEventsDao(appDb: AppDb) = appDb.folderWithEventsDao()
+
+    @Singleton
+    @Provides
+    fun provideFolderDao(appDb: AppDb) = appDb.folderDao()
+
+    @Singleton
+    @Provides
     fun provideEventDao(appDb: AppDb) = appDb.eventDao()
 
     @Singleton
