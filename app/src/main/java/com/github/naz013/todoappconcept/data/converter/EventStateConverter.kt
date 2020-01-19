@@ -1,4 +1,4 @@
-package com.github.naz013.todoappconcept.data.converters
+package com.github.naz013.todoappconcept.data.converter
 
 import androidx.room.TypeConverter
 import com.github.naz013.todoappconcept.data.EventState

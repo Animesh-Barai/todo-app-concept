@@ -11,7 +11,7 @@ interface EventDao {
     fun liveById(uuId: String): LiveData<Event>
 
     @Query("SELECT * FROM Event")
-    fun loadAll(): LiveData<List<Event>>
+    fun liveAll(): LiveData<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(data: List<Event>)

@@ -3,7 +3,7 @@ package com.github.naz013.todoappconcept.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.github.naz013.todoappconcept.data.converters.EventStateConverter
+import com.github.naz013.todoappconcept.data.converter.EventStateConverter
 import java.util.*
 
 @Entity
