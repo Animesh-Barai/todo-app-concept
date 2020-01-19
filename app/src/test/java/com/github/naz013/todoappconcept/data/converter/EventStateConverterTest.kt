@@ -36,5 +36,6 @@ class EventStateConverterTest {
         assertEquals(EventState.ACTIVE, eventStateConverter.toEnum(0))
         assertEquals(EventState.COMPLETED, eventStateConverter.toEnum(1))
         assertEquals(EventState.REMOVED, eventStateConverter.toEnum(2))
+        assertEquals(EventState.ACTIVE, eventStateConverter.toEnum(3))
     }
 }
