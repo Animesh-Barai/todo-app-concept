@@ -70,6 +70,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.1.0'
     implementation 'androidx.room:room-runtime:2.2.3'
     implementation 'androidx.room:room-ktx:2.2.3'
+    implementation 'androidx.room:room-rxjava2:2.2.3'
     kapt 'androidx.room:room-compiler:2.2.3'
 
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.0-rc04"
@@ -95,6 +96,10 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.25.4'
     kapt 'com.google.dagger:dagger-android-processor:2.25.4'
     compileOnly 'org.glassfish:javax.annotation:3.1.1'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.17'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.2.0'

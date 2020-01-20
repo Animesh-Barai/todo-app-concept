@@ -1,8 +1,8 @@
 package com.github.naz013.todoappconcept.data.repository.folder
 
-import androidx.lifecycle.LiveData
 import com.github.naz013.todoappconcept.data.Folder
+import io.reactivex.Flowable
 
 interface FolderRepository {
-    fun get(uuId: String): LiveData<Folder>
+    fun get(uuId: String): Flowable<Folder>
 }

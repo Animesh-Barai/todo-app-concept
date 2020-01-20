@@ -1,19 +1,20 @@
 package com.github.naz013.todoappconcept.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.github.naz013.todoappconcept.data.Event
+import io.reactivex.Completable
+import io.reactivex.Flowable
 
 @Dao
 interface EventDao : BaseDao<Event> {
 
     @Query("SELECT * FROM Event WHERE uuId = :uuId")
-    fun liveById(uuId: String): LiveData<Event>
+    fun liveById(uuId: String): Flowable<Event>
 
     @Query("SELECT * FROM Event")
-    fun liveAll(): LiveData<List<Event>>
+    fun liveAll(): Flowable<List<Event>>
 
     @Query("DELETE FROM Event")
-    suspend fun deleteAll()
+    fun deleteAll(): Completable
 }
