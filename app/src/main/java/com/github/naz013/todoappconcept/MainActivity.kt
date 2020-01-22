@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
