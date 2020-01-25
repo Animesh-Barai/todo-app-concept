@@ -2,6 +2,7 @@ package com.github.naz013.todoappconcept.di
 
 import android.app.Application
 import com.github.naz013.todoappconcept.TodoApp
+import com.github.naz013.todoappconcept.di.modules.PresenterModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -12,7 +13,8 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         AppModule::class,
-        MainActivityModule::class
+        MainActivityModule::class,
+        PresenterModule::class
     ]
 )
 interface AppComponent {

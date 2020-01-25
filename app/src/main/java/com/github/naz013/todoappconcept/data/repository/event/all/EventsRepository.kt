@@ -5,4 +5,5 @@ import io.reactivex.Flowable
 
 interface EventsRepository {
     fun all(): Flowable<List<Event>>
+    fun allInRange()
 }

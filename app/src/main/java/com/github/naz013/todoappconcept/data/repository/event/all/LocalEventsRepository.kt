@@ -5,4 +5,8 @@ import javax.inject.Inject
 
 class LocalEventsRepository @Inject constructor(private val eventDao: EventDao) : EventsRepository {
     override fun all() = eventDao.liveAll()
+
+    override fun allInRange() {
+
+    }
 }

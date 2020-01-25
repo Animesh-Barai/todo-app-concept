@@ -15,6 +15,9 @@ interface EventDao : BaseDao<Event> {
     @Query("SELECT * FROM Event")
     fun liveAll(): Flowable<List<Event>>
 
+    @Query("SELECT * FROM Event WHERE dueDate >= :dtStart AND dueDate < :dtEnd")
+    fun getAllInRange(dtStart: String, dtEnd: String): List<Event>
+
     @Query("DELETE FROM Event")
     fun deleteAll(): Completable
 }

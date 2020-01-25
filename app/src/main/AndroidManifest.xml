@@ -13,10 +13,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".MainActivity"
+            android:name=".arch.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
+            <nav-graph android:value="@navigation/main_nav" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
