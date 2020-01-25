@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
 interface BaseDao<T> {
@@ -13,7 +12,7 @@ interface BaseDao<T> {
     fun insertAll(data: List<T>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(t: T): Single<Long>
+    fun insert(t: T): Completable
 
     @Delete
     fun delete(t: T): Completable
