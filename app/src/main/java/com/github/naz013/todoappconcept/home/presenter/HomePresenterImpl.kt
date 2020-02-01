@@ -23,9 +23,20 @@ class HomePresenterImpl @Inject constructor(
 
     private var view: HomeView? = null
     private var disposable: Disposable? = null
+    private var dateRange: DateRange? = null
 
     override fun setView(v: HomeView) {
         view = v
+    }
+
+    override fun addButtonClick() {
+        dateRange.let {
+            if (it == null) {
+                view?.openAddDialog(Date())
+            } else {
+                view?.openAddDialog(it.from)
+            }
+        }
     }
 
     override fun loadDates() {
@@ -36,6 +47,7 @@ class HomePresenterImpl @Inject constructor(
     }
 
     override fun loadEvents(dateRange: DateRange) {
+        this.dateRange = dateRange
         disposable = findEvents(dateRange)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())

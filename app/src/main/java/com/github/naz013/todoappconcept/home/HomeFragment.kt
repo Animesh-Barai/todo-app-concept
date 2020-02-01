@@ -13,6 +13,7 @@ import com.github.naz013.todoappconcept.home.add.AddTaskDialog
 import com.github.naz013.todoappconcept.home.presenter.HomePresenter
 import com.github.naz013.todoappconcept.home.view.HomeView
 import com.github.naz013.todoappconcept.views.DateSelectorView
+import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(), HomeView {
 
@@ -20,12 +21,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addButton.setOnClickListener { openAddDialog() }
+        binding.addButton.setOnClickListener { presenter.addButtonClick() }
         presenter.loadDates()
-    }
-
-    private fun openAddDialog() {
-        addTaskDialog.showDialog(context!!)
     }
 
     override fun view(): HomeView = this
@@ -48,5 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
 
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun openAddDialog(date: Date) {
+        addTaskDialog.showDialog(context!!, date)
     }
 }

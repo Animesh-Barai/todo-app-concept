@@ -7,4 +7,5 @@ import com.github.naz013.todoappconcept.home.view.HomeView
 interface HomePresenter : BasePresenter<HomeView> {
     fun loadDates()
     fun loadEvents(dateRange: DateRange)
+    fun addButtonClick()
 }
