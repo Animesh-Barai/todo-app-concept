@@ -3,6 +3,7 @@ package com.github.naz013.todoappconcept.di
 import android.app.Application
 import com.github.naz013.todoappconcept.TodoApp
 import com.github.naz013.todoappconcept.di.modules.PresenterModule
+import com.github.naz013.todoappconcept.home.add.AddTaskDialog
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -27,4 +28,6 @@ interface AppComponent {
     }
 
     fun inject(application: TodoApp)
+
+    fun inject(addTaskDialog: AddTaskDialog)
 }

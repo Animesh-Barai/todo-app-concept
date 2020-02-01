@@ -1,6 +1,7 @@
 package com.github.naz013.todoappconcept
 
 import android.app.Application
+import com.github.naz013.todoappconcept.di.AppComponent
 import com.github.naz013.todoappconcept.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -15,8 +16,12 @@ class TodoApp : Application(), HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        AppInjector.init(this)
+        appComponent = AppInjector.init(this)
     }
 
     override fun androidInjector() = dispatchingAndroidInjector
+
+    companion object {
+        var appComponent: AppComponent? = null
+    }
 }

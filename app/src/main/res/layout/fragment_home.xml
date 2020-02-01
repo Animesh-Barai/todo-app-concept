@@ -2,44 +2,59 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?colorPrimaryDark"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="?colorPrimaryDark"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="@string/to_do_list"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/settingButton"
-                android:layout_width="56dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_settings" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="@string/to_do_list"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/settingButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_settings" />
+
+            </LinearLayout>
+
+            <com.github.naz013.todoappconcept.views.DateSelectorView
+                android:id="@+id/dateSelectorView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp" />
 
         </LinearLayout>
 
-        <com.github.naz013.todoappconcept.views.DateSelectorView
-            android:id="@+id/dateSelectorView"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp" />
-
-    </LinearLayout>
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_plus"
+            app:useCompatPadding="true" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

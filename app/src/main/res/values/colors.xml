@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#f8f8f8</color>
     <color name="colorSecondary">#64f37c</color>
     <color name="colorSecondaryVariant">#0B10BB</color>
+    <color name="colorSecondaryVariant12">#1F0B10BB</color>
     <color name="colorCardBackground">#FFFFFF</color>
     <color name="colorCardCompletedBackground">#F6F6F6</color>
     <color name="colorTextPrimary">#313131</color>

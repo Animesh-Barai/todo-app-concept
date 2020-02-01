@@ -1,7 +1,10 @@
 package com.github.naz013.todoappconcept.di.modules
 
 import com.github.naz013.todoappconcept.data.dao.EventDao
+import com.github.naz013.todoappconcept.data.dao.FolderDao
 import com.github.naz013.todoappconcept.di.AppModule
+import com.github.naz013.todoappconcept.home.add.AddDialogPresenter
+import com.github.naz013.todoappconcept.home.add.AddDialogPresenterImpl
 import com.github.naz013.todoappconcept.home.presenter.HomePresenter
 import com.github.naz013.todoappconcept.home.presenter.HomePresenterImpl
 import com.github.naz013.todoappconcept.utils.threading.NormalSchedulerProvider
@@ -14,6 +17,13 @@ import javax.inject.Singleton
     includes = [AppModule::class]
 )
 class PresenterModule {
+
+    @Provides
+    fun provideAddDialogPresenter(
+        schedulerProvider: SchedulerProvider,
+        eventDao: EventDao,
+        folderDao: FolderDao
+    ): AddDialogPresenter = AddDialogPresenterImpl(schedulerProvider, eventDao, folderDao)
 
     @Provides
     fun provideHomePresenter(

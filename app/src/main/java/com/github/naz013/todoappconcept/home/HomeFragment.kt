@@ -9,15 +9,23 @@ import com.github.naz013.todoappconcept.arch.BaseFragment
 import com.github.naz013.todoappconcept.data.DateRange
 import com.github.naz013.todoappconcept.data.FolderWithEvents
 import com.github.naz013.todoappconcept.databinding.FragmentHomeBinding
+import com.github.naz013.todoappconcept.home.add.AddTaskDialog
 import com.github.naz013.todoappconcept.home.presenter.HomePresenter
 import com.github.naz013.todoappconcept.home.view.HomeView
 import com.github.naz013.todoappconcept.views.DateSelectorView
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(), HomeView {
 
+    private val addTaskDialog = AddTaskDialog()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.addButton.setOnClickListener { openAddDialog() }
         presenter.loadDates()
+    }
+
+    private fun openAddDialog() {
+        addTaskDialog.showDialog(context!!)
     }
 
     override fun view(): HomeView = this

@@ -3,4 +3,7 @@
     <string name="calendar">Calendar</string>
     <string name="today">Today</string>
     <string name="to_do_list">To-Do List</string>
+    <string name="enter_task_title">Enter Task Title</string>
+    <string name="details_goes_here">Details goes here...</string>
+    <string name="save">Save</string>
 </resources>
