@@ -23,7 +23,6 @@ class AddTaskDialog : AddDialogView {
     lateinit var presenter: AddDialogPresenter
     private var dialog: BottomSheetDialog? = null
     private var binding: DialogAddTaskBinding? = null
-    private val form = AddTaskForm()
 
     init {
         TodoApp.appComponent?.inject(this)
@@ -31,7 +30,7 @@ class AddTaskDialog : AddDialogView {
 
     fun showDialog(context: Context, date: Date) {
         val view = DialogAddTaskBinding.inflate(LayoutInflater.from(context))
-        view.saveButton.setOnClickListener { presenter.saveTask(createForm(view)) }
+        view.saveButton.setOnClickListener { presenter.saveClick() }
 
         dialog = BottomSheetDialog(context)
         dialog?.setContentView(view.root)
@@ -43,14 +42,13 @@ class AddTaskDialog : AddDialogView {
         presenter.loadFolders()
     }
 
-    private fun createForm(binding: DialogAddTaskBinding): AddTaskForm {
-        form.title = binding.titleFieldView.text.toString()
-        form.description = binding.detailsFieldView.text.toString()
-        return form
+    override fun populateForm(addTaskForm: AddTaskForm): AddTaskForm? {
+        addTaskForm.title = binding?.titleFieldView?.text.toString()
+        addTaskForm.description = binding?.detailsFieldView?.text.toString()
+        return addTaskForm
     }
 
     override fun showSelectedDate(date: Date?) {
-        form.date = date
         if (date == null) {
             binding?.dateView?.visibility = View.GONE
         } else {
@@ -62,7 +60,6 @@ class AddTaskDialog : AddDialogView {
     }
 
     override fun showSelectedFolder(folder: Folder?) {
-        form.folderId = folder?.uuId
         if (folder == null) {
             binding?.folderView?.visibility = View.GONE
         } else {
@@ -73,16 +70,15 @@ class AddTaskDialog : AddDialogView {
         }
     }
 
-    override fun showSelectedTime(time: Date?) {
-        form.time = time
-        if (time == null) {
+    override fun showSelectedTime(date: Date?) {
+        if (date == null) {
             binding?.timeView?.visibility = View.GONE
             binding?.timeSuggestionsView?.visibility = View.GONE
         } else {
             binding?.timeSuggestionsView?.visibility = View.GONE
             binding?.timeView?.visibility = View.VISIBLE
             binding?.removeTimeButton?.setOnClickListener { presenter.removeTime() }
-            binding?.timeValueView?.text = time.toUserReadableTime()
+            binding?.timeValueView?.text = date.toUserReadableTime()
         }
     }
 

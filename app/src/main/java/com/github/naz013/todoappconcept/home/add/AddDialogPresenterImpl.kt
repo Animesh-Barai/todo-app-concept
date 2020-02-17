@@ -1,79 +1,138 @@
 package com.github.naz013.todoappconcept.home.add
 
+import com.github.naz013.todoappconcept.data.Event
+import com.github.naz013.todoappconcept.data.EventState
 import com.github.naz013.todoappconcept.data.Folder
 import com.github.naz013.todoappconcept.data.dao.EventDao
 import com.github.naz013.todoappconcept.data.dao.FolderDao
 import com.github.naz013.todoappconcept.utils.threading.SchedulerProvider
+import com.github.naz013.todoappconcept.utils.toServerTime
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
 
 class AddDialogPresenterImpl @Inject constructor(
-    private val schedulerProvider: SchedulerProvider,
-    private val eventDao: EventDao,
-    private val folderDao: FolderDao
+        private val schedulerProvider: SchedulerProvider,
+        private val eventDao: EventDao,
+        private val folderDao: FolderDao
 ) : AddDialogPresenter {
 
     private var view: AddDialogView? = null
     private var disposable: Disposable? = null
+    private val form = AddTaskForm()
+
+    override fun saveClick() {
+        val form = view?.populateForm(form)
+        if (form != null) {
+            saveTask(form)
+        } else {
+            view?.showError("Failed to save Task")
+        }
+    }
 
     override fun pickDate(date: Date) {
         view?.showSelectedDate(date)
+        form.date = date
         loadTimes()
     }
 
     override fun removeDate() {
         view?.showSelectedDate(null)
         view?.showSelectedTime(null)
+        form.date = null
         loadDates()
     }
 
     override fun pickTime(date: Date) {
         view?.showSelectedTime(date)
+        form.time = date
     }
 
     override fun removeTime() {
         view?.showSelectedTime(null)
+        form.time = null
         loadTimes()
     }
 
     override fun pickFolder(folder: Folder) {
         view?.showSelectedFolder(folder)
+        form.folderId = folder.uuId
     }
 
     override fun removeFolder() {
         view?.showSelectedFolder(null)
+        form.folderId = null
         loadFolders()
     }
 
     override fun loadFolders() {
         disposable = folderDao.liveAll()
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe({ view?.showFolders(it) }, { view?.showError(it.message ?: "") })
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ view?.showFolders(it) }, { view?.showError(it.message ?: "") })
     }
 
     override fun loadDates() {
         disposable = generateDates(Date())
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe({ view?.showDateSuggestions(it) }, { view?.showError(it.message ?: "") })
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ view?.showDateSuggestions(it) }, { view?.showError(it.message ?: "") })
     }
 
     override fun loadTimes() {
         disposable = generateTimes(Date())
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe({ view?.showTimeSuggestions(it) }, { view?.showError(it.message ?: "") })
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ view?.showTimeSuggestions(it) }, { view?.showError(it.message ?: "") })
     }
 
-    override fun saveTask(addTaskForm: AddTaskForm) {
+    private fun saveTask(addTaskForm: AddTaskForm) {
         if (!verifyForm(addTaskForm)) {
             return
         }
+        disposable = Observable.just(addTaskForm)
+                .map {
+                    if (form.folderId.isNullOrEmpty()) {
+                        val folders = folderDao.liveAll()
+                                .blockingFirst()
+                        val folder = if (folders.isEmpty()) {
+                            defaultFolder().also {
+                                folderDao.insert(it).blockingAwait()
+                            }
+                        } else {
+                            folders.first()
+                        }
+                        form.folderId = folder.uuId
+                    }
+                    eventDao.insert(toEvent(form)).blockingAwait()
+                }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    view?.showMessage("Event saved")
+                    view?.closeDialog()
+                }, {
+                    view?.showError(it.message ?: "")
+                })
+    }
 
-        view?.closeDialog()
+    private fun defaultFolder(): Folder {
+        return Folder().also {
+            it.title = "Default"
+        }
+    }
+
+    private fun toEvent(addTaskForm: AddTaskForm): Event {
+        return Event().apply {
+            this.createAt = Date().toServerTime()
+            this.description = addTaskForm.description
+            this.dueDate = addTaskForm.date?.toServerTime()
+            this.dueTime = addTaskForm.time?.toServerTime()
+            this.folderId = addTaskForm.folderId
+            this.state = EventState.ACTIVE
+            this.summary = addTaskForm.title
+        }
     }
 
     private fun verifyForm(addTaskForm: AddTaskForm): Boolean {

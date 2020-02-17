@@ -12,7 +12,7 @@ interface FolderDao : BaseDao<Folder> {
     @Query("SELECT * FROM Folder WHERE uuId = :uuId")
     fun liveById(uuId: String): Flowable<Folder>
 
-    @Query("SELECT * FROM Event")
+    @Query("SELECT * FROM Folder")
     fun liveAll(): Flowable<List<Folder>>
 
     @Query("DELETE FROM Folder")

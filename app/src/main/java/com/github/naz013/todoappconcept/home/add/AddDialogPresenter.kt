@@ -5,7 +5,7 @@ import com.github.naz013.todoappconcept.data.Folder
 import java.util.*
 
 interface AddDialogPresenter : BasePresenter<AddDialogView> {
-    fun saveTask(addTaskForm: AddTaskForm)
+    fun saveClick()
     fun loadDates()
     fun loadTimes()
     fun loadFolders()

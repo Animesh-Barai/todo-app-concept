@@ -12,4 +12,5 @@ interface AddDialogView : BaseView {
     fun showSelectedDate(date: Date?)
     fun showSelectedTime(date: Date?)
     fun showSelectedFolder(folder: Folder?)
+    fun populateForm(addTaskForm: AddTaskForm): AddTaskForm?
 }
