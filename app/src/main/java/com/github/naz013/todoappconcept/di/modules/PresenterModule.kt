@@ -1,7 +1,8 @@
 package com.github.naz013.todoappconcept.di.modules
 
 import com.github.naz013.todoappconcept.data.dao.EventDao
-import com.github.naz013.todoappconcept.data.dao.FolderDao
+import com.github.naz013.todoappconcept.data.repository.event.EventRepository
+import com.github.naz013.todoappconcept.data.repository.folder.FolderRepository
 import com.github.naz013.todoappconcept.di.AppModule
 import com.github.naz013.todoappconcept.home.add.AddDialogPresenter
 import com.github.naz013.todoappconcept.home.add.AddDialogPresenterImpl
@@ -21,9 +22,9 @@ class PresenterModule {
     @Provides
     fun provideAddDialogPresenter(
         schedulerProvider: SchedulerProvider,
-        eventDao: EventDao,
-        folderDao: FolderDao
-    ): AddDialogPresenter = AddDialogPresenterImpl(schedulerProvider, eventDao, folderDao)
+        eventRepository: EventRepository,
+        folderRepository: FolderRepository
+    ): AddDialogPresenter = AddDialogPresenterImpl(schedulerProvider, eventRepository, folderRepository)
 
     @Provides
     fun provideHomePresenter(

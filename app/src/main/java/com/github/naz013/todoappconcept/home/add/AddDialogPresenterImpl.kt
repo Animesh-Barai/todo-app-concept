@@ -3,8 +3,8 @@ package com.github.naz013.todoappconcept.home.add
 import com.github.naz013.todoappconcept.data.Event
 import com.github.naz013.todoappconcept.data.EventState
 import com.github.naz013.todoappconcept.data.Folder
-import com.github.naz013.todoappconcept.data.dao.EventDao
-import com.github.naz013.todoappconcept.data.dao.FolderDao
+import com.github.naz013.todoappconcept.data.repository.event.EventRepository
+import com.github.naz013.todoappconcept.data.repository.folder.FolderRepository
 import com.github.naz013.todoappconcept.utils.threading.SchedulerProvider
 import com.github.naz013.todoappconcept.utils.toServerTime
 import io.reactivex.Observable
@@ -13,9 +13,9 @@ import java.util.*
 import javax.inject.Inject
 
 class AddDialogPresenterImpl @Inject constructor(
-        private val schedulerProvider: SchedulerProvider,
-        private val eventDao: EventDao,
-        private val folderDao: FolderDao
+    private val schedulerProvider: SchedulerProvider,
+    private val eventRepository: EventRepository,
+    private val folderRepository: FolderRepository
 ) : AddDialogPresenter {
 
     private var view: AddDialogView? = null
@@ -67,7 +67,7 @@ class AddDialogPresenterImpl @Inject constructor(
     }
 
     override fun loadFolders() {
-        disposable = folderDao.liveAll()
+        disposable = folderRepository.liveAll()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe({ view?.showFolders(it) }, { view?.showError(it.message ?: "") })
@@ -94,18 +94,18 @@ class AddDialogPresenterImpl @Inject constructor(
         disposable = Observable.just(addTaskForm)
                 .map {
                     if (form.folderId.isNullOrEmpty()) {
-                        val folders = folderDao.liveAll()
+                        val folders = folderRepository.liveAll()
                                 .blockingFirst()
                         val folder = if (folders.isEmpty()) {
                             defaultFolder().also {
-                                folderDao.insert(it).blockingAwait()
+                                folderRepository.insert(it).blockingAwait()
                             }
                         } else {
                             folders.first()
                         }
                         form.folderId = folder.uuId
                     }
-                    eventDao.insert(toEvent(form)).blockingAwait()
+                    eventRepository.insert(toEvent(form)).blockingAwait()
                 }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())

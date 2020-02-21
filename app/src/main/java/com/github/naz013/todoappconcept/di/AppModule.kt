@@ -53,9 +53,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideEventRepository(eventDao: EventDao): EventRepository {
-        return LocalEventRepository(
-            eventDao
-        )
+        return LocalEventRepository(eventDao)
     }
 
     @Singleton
