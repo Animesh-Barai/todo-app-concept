@@ -39,9 +39,9 @@ class AddDialogPresenterImpl @Inject constructor(
 
     override fun removeDate() {
         view?.showSelectedDate(null)
-        view?.showSelectedTime(null)
         form.date = null
         loadDates()
+        removeTime()
     }
 
     override fun pickTime(date: Date) {

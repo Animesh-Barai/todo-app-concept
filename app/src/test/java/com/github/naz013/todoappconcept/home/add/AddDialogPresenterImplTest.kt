@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.*
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class AddDialogPresenterImplTest {
 
@@ -46,6 +47,9 @@ class AddDialogPresenterImplTest {
 
     @Test
     fun pickDate() {
+        val date = Date()
+        presenter.pickDate(date)
+        verify(view).showSelectedDate(date)
     }
 
     @Test
