@@ -4,8 +4,6 @@ import android.app.Application
 import com.github.naz013.todoappconcept.data.dao.EventDao
 import com.github.naz013.todoappconcept.data.dao.FolderDao
 import com.github.naz013.todoappconcept.data.dao.FolderWithEventDao
-import com.github.naz013.todoappconcept.data.repository.event.all.EventsRepository
-import com.github.naz013.todoappconcept.data.repository.event.all.LocalEventsRepository
 import com.github.naz013.todoappconcept.data.repository.event.EventRepository
 import com.github.naz013.todoappconcept.data.repository.event.LocalEventRepository
 import com.github.naz013.todoappconcept.data.repository.folder.FolderRepository
@@ -42,12 +40,6 @@ class AppModule {
     @Provides
     fun provideFolderRepository(folderDao: FolderDao): FolderRepository {
         return LocalFolderRepository(folderDao)
-    }
-
-    @Singleton
-    @Provides
-    fun provideEventsRepository(eventDao: EventDao): EventsRepository {
-        return LocalEventsRepository(eventDao)
     }
 
     @Singleton

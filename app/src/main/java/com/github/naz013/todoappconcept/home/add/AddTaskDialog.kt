@@ -13,9 +13,12 @@ import com.github.naz013.todoappconcept.utils.toUserReadableTime
 import com.github.naz013.todoappconcept.utils.toUserScreenDate
 import com.github.naz013.todoappconcept.views.SuggestionTextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+
+typealias SaveCallback = () -> Unit
 
 class AddTaskDialog : AddDialogView {
 
@@ -23,6 +26,7 @@ class AddTaskDialog : AddDialogView {
     lateinit var presenter: AddDialogPresenter
     private var dialog: BottomSheetDialog? = null
     private var binding: DialogAddTaskBinding? = null
+    var saveCallback: SaveCallback? = null
 
     init {
         TodoApp.appComponent?.inject(this)
@@ -30,7 +34,15 @@ class AddTaskDialog : AddDialogView {
 
     fun showDialog(context: Context, date: Date) {
         val view = DialogAddTaskBinding.inflate(LayoutInflater.from(context))
-        view.saveButton.setOnClickListener { presenter.saveClick() }
+        view.saveButton.setOnClickListener {
+            presenter.saveClick()
+            GlobalScope.launch {
+                delay(500)
+                withContext(Dispatchers.Main) {
+                    saveCallback?.invoke()
+                }
+            }
+        }
 
         dialog = BottomSheetDialog(context)
         dialog?.setContentView(view.root)
@@ -95,7 +107,10 @@ class AddTaskDialog : AddDialogView {
 
         val margin = folderSuggestionView.context.dp2px(4)
         val params: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         params.setMargins(margin, 0, margin, 0)
 
         folders.forEachIndexed { index, folder ->
@@ -118,7 +133,10 @@ class AddTaskDialog : AddDialogView {
 
         val margin = dateSuggestionView.context.dp2px(4)
         val params: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         params.setMargins(margin, 0, margin, 0)
 
         dates.forEachIndexed { index, date ->
@@ -141,7 +159,10 @@ class AddTaskDialog : AddDialogView {
 
         val margin = timeSuggestionView.context.dp2px(4)
         val params: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         params.setMargins(margin, 0, margin, 0)
 
         times.forEachIndexed { index, date ->

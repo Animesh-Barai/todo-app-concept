@@ -4,7 +4,8 @@ import com.github.naz013.todoappconcept.R
 import com.github.naz013.todoappconcept.data.DateRange
 import com.github.naz013.todoappconcept.data.Event
 import com.github.naz013.todoappconcept.data.FolderWithEvents
-import com.github.naz013.todoappconcept.data.dao.EventDao
+import com.github.naz013.todoappconcept.data.repository.event.EventRepository
+import com.github.naz013.todoappconcept.data.repository.folder_with_events.FolderWithEventsRepository
 import com.github.naz013.todoappconcept.home.view.HomeView
 import com.github.naz013.todoappconcept.utils.TimeUtil
 import com.github.naz013.todoappconcept.utils.threading.SchedulerProvider
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 class HomePresenterImpl @Inject constructor(
     private val schedulerProvider: SchedulerProvider,
-    private val eventDao: EventDao
+    private val eventsWithEventsRepository: FolderWithEventsRepository,
+    private val eventRepository: EventRepository
 ) : HomePresenter {
 
     private var view: HomeView? = null
@@ -54,6 +56,10 @@ class HomePresenterImpl @Inject constructor(
             .subscribe({ view?.showEvents(it) }, { view?.showError(it.message ?: "") })
     }
 
+    override fun reloadEvents() {
+        dateRange?.let { loadEvents(it) }
+    }
+
     override fun onDestroy() {
         disposable?.dispose()
         view = null
@@ -61,7 +67,12 @@ class HomePresenterImpl @Inject constructor(
 
     private fun findEvents(dateRange: DateRange): Observable<List<FolderWithEvents>> {
         return Observable.fromPublisher {
-            it.onNext(listOf())
+            it.onNext(
+                eventsWithEventsRepository.getAllInRange(
+                    dateRange.from.toServerTime(),
+                    dateRange.to.toServerTime()
+                )
+            )
             it.onComplete()
         }
     }
@@ -132,6 +143,9 @@ class HomePresenterImpl @Inject constructor(
     }
 
     private fun getEventsForDate(dateRange: DateRange): List<Event> {
-        return eventDao.getAllInRange(dateRange.from.toServerTime(), dateRange.to.toServerTime())
+        return eventRepository.getAllInRange(
+            dateRange.from.toServerTime(),
+            dateRange.to.toServerTime()
+        )
     }
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.naz013.todoappconcept.R
@@ -46,6 +45,18 @@ class DateSelectorView : RecyclerView {
         this.items.clear()
         this.items.addAll(list)
         this.innerAdapter.notifyDataSetChanged()
+        findSelected().let { position ->
+            if (position != -1) {
+                onDateSelectedListener?.onDateSelected(position, items[position])
+            }
+        }
+    }
+
+    private fun findSelected(): Int {
+        items.forEachIndexed { index, dateItem ->
+            if (dateItem.isSelected) return index
+        }
+        return -1
     }
 
     private fun initView() {
@@ -67,12 +78,21 @@ class DateSelectorView : RecyclerView {
 
     private fun onItemClick(position: Int) {
         if (items[position].isSelected) {
-
+            onDateSelectedListener?.onDateSelected(position, items[position])
         } else {
             items.forEach { it.isSelected = false }
             items[position].isSelected = true
             innerAdapter.notifyDataSetChanged()
             onDateSelectedListener?.onDateSelected(position, items[position])
+        }
+    }
+
+    fun updateCounter(count: Int) {
+        findSelected().let { position ->
+            if (position != -1) {
+                items[position].count = count
+                innerAdapter.notifyItemChanged(position)
+            }
         }
     }
 

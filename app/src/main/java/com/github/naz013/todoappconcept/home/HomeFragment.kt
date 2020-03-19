@@ -17,12 +17,28 @@ import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(), HomeView {
 
-    private val addTaskDialog = AddTaskDialog()
+    private val addTaskDialog = AddTaskDialog().apply {
+        saveCallback = {
+            this@HomeFragment.presenter.reloadEvents()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener { presenter.addButtonClick() }
+        binding.dateSelectorView.onDateSelectedListener =
+            object : DateSelectorView.OnDateSelectedListener {
+                override fun onDateSelected(position: Int, dateItem: DateSelectorView.DateItem<*>) {
+                    onDateClicked(position, dateItem.payload)
+                }
+            }
         presenter.loadDates()
+    }
+
+    private fun onDateClicked(position: Int, payload: Any?) {
+        if (payload != null && payload is DateRange) {
+            presenter.loadEvents(payload)
+        }
     }
 
     override fun view(): HomeView = this
@@ -36,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
     }
 
     override fun showEvents(events: List<FolderWithEvents>) {
-
+        binding.dateSelectorView.updateCounter(events.sumBy { it.events.size })
     }
 
     override fun showMessage(message: String) {
