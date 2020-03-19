@@ -8,8 +8,6 @@ import com.github.naz013.todoappconcept.data.repository.event.EventRepository
 import com.github.naz013.todoappconcept.data.repository.event.LocalEventRepository
 import com.github.naz013.todoappconcept.data.repository.folder.FolderRepository
 import com.github.naz013.todoappconcept.data.repository.folder.LocalFolderRepository
-import com.github.naz013.todoappconcept.data.repository.folder.all.FoldersRepository
-import com.github.naz013.todoappconcept.data.repository.folder.all.LocalFoldersRepository
 import com.github.naz013.todoappconcept.data.repository.folder_with_events.FolderWithEventsRepository
 import com.github.naz013.todoappconcept.data.repository.folder_with_events.LocalFolderWithEventsRepository
 import com.github.naz013.todoappconcept.utils.Prefs
@@ -28,12 +26,6 @@ class AppModule {
     @Provides
     fun provideFolderWithEventsRepository(folderWithEventDao: FolderWithEventDao): FolderWithEventsRepository {
         return LocalFolderWithEventsRepository(folderWithEventDao)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFoldersRepository(folderDao: FolderDao): FoldersRepository {
-        return LocalFoldersRepository(folderDao)
     }
 
     @Singleton
