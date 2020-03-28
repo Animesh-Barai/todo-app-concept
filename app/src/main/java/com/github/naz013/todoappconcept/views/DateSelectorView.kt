@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.naz013.todoappconcept.R
@@ -28,7 +27,11 @@ class DateSelectorView : RecyclerView {
         initView()
     }
 
-    constructor(context: Context, attributeSet: AttributeSet?, defStyle: Int) : super(context, attributeSet, defStyle) {
+    constructor(context: Context, attributeSet: AttributeSet?, defStyle: Int) : super(
+        context,
+        attributeSet,
+        defStyle
+    ) {
         initView()
     }
 
@@ -99,9 +102,21 @@ class DateSelectorView : RecyclerView {
     private inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return if (viewType == 1) {
-                CalendarHolder(parent)
+                CalendarHolder(
+                    ListItemSelectorAllBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
             } else {
-                DayHolder(parent)
+                DayHolder(
+                    ListItemSelectorTodayBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
             }
         }
 
@@ -127,43 +142,66 @@ class DateSelectorView : RecyclerView {
         }
     }
 
-    private inner class CalendarHolder(parent: ViewGroup) : ViewHolder(
-        ListItemSelectorAllBinding.inflate(LayoutInflater.from(parent.context), parent, false).root
-    ) {
-        private val binding: ListItemSelectorAllBinding = DataBindingUtil.bind(itemView)!!
+    private inner class CalendarHolder(private val binding: ListItemSelectorAllBinding) :
+        ViewHolder(
+            binding.root
+        ) {
         init {
             binding.root.setOnClickListener { onItemClick(adapterPosition) }
         }
+
         fun bind(item: DateItem<*>) {
             val context = binding.cardView.context
             if (item.isSelected) {
                 binding.cardView.setBackgroundResource(R.drawable.date_selector_card_bg_selected)
-                binding.iconView.imageTintList = ContextCompat.getColorStateList(context, R.color.colorCardBackground)
+                binding.iconView.imageTintList =
+                    ContextCompat.getColorStateList(context, R.color.colorCardBackground)
             } else {
                 binding.cardView.setBackgroundResource(R.drawable.date_selector_card_bg)
-                binding.iconView.imageTintList = ContextCompat.getColorStateList(context, R.color.colorSecondaryVariant)
+                binding.iconView.imageTintList =
+                    ContextCompat.getColorStateList(context, R.color.colorSecondaryVariant)
             }
             binding.counterView.text = "${item.count}"
         }
     }
 
-    private inner class DayHolder(parent: ViewGroup) : ViewHolder(
-        ListItemSelectorTodayBinding.inflate(LayoutInflater.from(parent.context), parent, false).root
+    private inner class DayHolder(private val binding: ListItemSelectorTodayBinding) : ViewHolder(
+        binding.root
     ) {
-        private val binding: ListItemSelectorTodayBinding = DataBindingUtil.bind(itemView)!!
         init {
             binding.root.setOnClickListener { onItemClick(adapterPosition) }
         }
+
         fun bind(item: DateItem<*>) {
             val context = binding.cardView.context
             if (item.isSelected) {
                 binding.cardView.setBackgroundResource(R.drawable.date_selector_card_bg_selected)
-                binding.dayView.setTextColor(ContextCompat.getColor(context, R.color.colorCardBackground))
-                binding.todayView.setTextColor(ContextCompat.getColor(context, R.color.colorCardBackground))
+                binding.dayView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorCardBackground
+                    )
+                )
+                binding.todayView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorCardBackground
+                    )
+                )
             } else {
                 binding.cardView.setBackgroundResource(R.drawable.date_selector_card_bg)
-                binding.dayView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryVariant))
-                binding.todayView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryVariant))
+                binding.dayView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorSecondaryVariant
+                    )
+                )
+                binding.todayView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorSecondaryVariant
+                    )
+                )
             }
             binding.counterView.text = "${item.count}"
             binding.dayView.text = "${item.day}"
@@ -180,7 +218,7 @@ class DateSelectorView : RecyclerView {
         fun onDateSelected(position: Int, dateItem: DateItem<*>)
     }
 
-    data class DateItem<P> (
+    data class DateItem<P>(
         var day: Int = -1,
         @DrawableRes var icon: Int = 0,
         var count: Int = 0,

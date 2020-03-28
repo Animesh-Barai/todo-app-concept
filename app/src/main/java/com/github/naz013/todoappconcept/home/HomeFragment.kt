@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.naz013.todoappconcept.arch.BaseFragment
 import com.github.naz013.todoappconcept.data.DateRange
-import com.github.naz013.todoappconcept.data.FolderWithEvents
+import com.github.naz013.todoappconcept.data.ListEvent
 import com.github.naz013.todoappconcept.databinding.FragmentHomeBinding
+import com.github.naz013.todoappconcept.home.adapter.EventsAdapter
 import com.github.naz013.todoappconcept.home.add.AddTaskDialog
 import com.github.naz013.todoappconcept.home.presenter.HomePresenter
 import com.github.naz013.todoappconcept.home.view.HomeView
@@ -22,9 +24,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
             this@HomeFragment.presenter.reloadEvents()
         }
     }
+    private val eventsAdapter = EventsAdapter().apply {
+        itemClickListener = { listEvent, position -> presenter.eventCheck(listEvent, position) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding.eventsList) {
+            this.layoutManager = LinearLayoutManager(requireContext())
+            this.adapter = eventsAdapter
+        }
+
         binding.addButton.setOnClickListener { presenter.addButtonClick() }
         binding.dateSelectorView.onDateSelectedListener =
             object : DateSelectorView.OnDateSelectedListener {
@@ -51,8 +61,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
         binding.dateSelectorView.showDates(dates)
     }
 
-    override fun showEvents(events: List<FolderWithEvents>) {
-        binding.dateSelectorView.updateCounter(events.sumBy { it.events.size })
+    override fun showEvents(events: List<ListEvent>) {
+        binding.dateSelectorView.updateCounter(events.size)
+        eventsAdapter.data = events
     }
 
     override fun showMessage(message: String) {

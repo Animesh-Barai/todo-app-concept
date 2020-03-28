@@ -13,7 +13,11 @@ class CrossTextView : AppCompatTextView {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet)
-    constructor(context: Context, attributeSet: AttributeSet?, defStyle: Int) : super(context, attributeSet, defStyle)
+    constructor(context: Context, attributeSet: AttributeSet?, defStyle: Int) : super(
+        context,
+        attributeSet,
+        defStyle
+    )
 
     fun crossText() {
         if (isCrossed) return
@@ -48,7 +52,8 @@ class CrossTextView : AppCompatTextView {
         paintFlags = if (isCrossed) {
             paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         } else {
-            paintFlags or -Paint.STRIKE_THRU_TEXT_FLAG
+            paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
+        invalidate()
     }
 }

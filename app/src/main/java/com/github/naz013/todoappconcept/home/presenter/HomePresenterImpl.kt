@@ -1,9 +1,7 @@
 package com.github.naz013.todoappconcept.home.presenter
 
 import com.github.naz013.todoappconcept.R
-import com.github.naz013.todoappconcept.data.DateRange
-import com.github.naz013.todoappconcept.data.Event
-import com.github.naz013.todoappconcept.data.FolderWithEvents
+import com.github.naz013.todoappconcept.data.*
 import com.github.naz013.todoappconcept.data.repository.event.EventRepository
 import com.github.naz013.todoappconcept.data.repository.folder_with_events.FolderWithEventsRepository
 import com.github.naz013.todoappconcept.home.view.HomeView
@@ -26,6 +24,20 @@ class HomePresenterImpl @Inject constructor(
     private var view: HomeView? = null
     private var disposable: Disposable? = null
     private var dateRange: DateRange? = null
+
+    override fun eventCheck(listEvent: ListEvent, position: Int) {
+        val event = listEvent.event
+        if (event.state == EventState.COMPLETED) {
+            event.state = EventState.ACTIVE
+        } else {
+            event.state = EventState.COMPLETED
+        }
+        disposable = eventRepository.insert(event)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .doOnComplete { reloadEvents() }
+            .subscribe({ }, { view?.showError(it.message ?: "") })
+    }
 
     override fun setView(v: HomeView) {
         view = v
@@ -65,16 +77,31 @@ class HomePresenterImpl @Inject constructor(
         view = null
     }
 
-    private fun findEvents(dateRange: DateRange): Observable<List<FolderWithEvents>> {
+    private fun findEvents(dateRange: DateRange): Observable<List<ListEvent>> {
         return Observable.fromPublisher {
-            it.onNext(
-                eventsWithEventsRepository.getAllInRange(
-                    dateRange.from.toServerTime(),
-                    dateRange.to.toServerTime()
-                )
+            val eventsWithFolder = eventsWithEventsRepository.getAllInRange(
+                dateRange.from.toServerTime(),
+                dateRange.to.toServerTime()
             )
+            it.onNext(mapToListEvents(eventsWithFolder))
             it.onComplete()
         }
+    }
+
+    private fun mapToListEvents(list: List<FolderWithEvents>): List<ListEvent> {
+        val mutable = mutableListOf<ListEvent>()
+        list.forEach { folder ->
+            folder.events.sortedBy { it.dueTime }.forEachIndexed { index, event ->
+                mutable.add(
+                    ListEvent(
+                        event,
+                        if (index == 0) folder.events.size else ListEvent.NO_HEADER_COUNTER,
+                        folder.folder?.title ?: ""
+                    )
+                )
+            }
+        }
+        return mutable
     }
 
     private fun generateDates(from: Date): Observable<List<DateSelectorView.DateItem<DateRange>>> {

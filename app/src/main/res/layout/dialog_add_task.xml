@@ -1,207 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleLayout"
+        style="@style/OutlinedBoxStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/titleLayout"
-            style="@style/OutlinedBoxStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleFieldView"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_task_title"
+            android:maxLength="64"
+            android:maxLines="1"
+            android:textAppearance="?textAppearanceSubtitle1"
+            android:textColor="@color/colorTextPrimary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="17sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/detailsLayout"
+        style="@style/OutlinedBoxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detailsFieldView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/details_goes_here"
+            android:maxLength="500"
+            android:maxLines="3"
+            android:textAppearance="?textAppearanceSubtitle1"
+            android:textColor="@color/colorTextPrimary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="13sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_calendar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dateValueView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp">
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="18sp"
+            tools:text="25 Jan" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titleFieldView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_task_title"
-                android:maxLength="64"
-                android:maxLines="1"
-                android:textAppearance="?textAppearanceSubtitle1"
-                android:textColor="@color/colorTextPrimary"
-                android:textColorHint="@color/colorTextSecondary"
-                android:textSize="17sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/detailsLayout"
-            style="@style/OutlinedBoxStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/removeDateButton"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/detailsFieldView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/details_goes_here"
-                android:maxLength="500"
-                android:maxLines="3"
-                android:textAppearance="?textAppearanceSubtitle1"
-                android:textColor="@color/colorTextPrimary"
-                android:textColorHint="@color/colorTextSecondary"
-                android:textSize="13sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/dateView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_calendar" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/dateValueView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp"
-                tools:text="25 Jan" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/removeDateButton"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="16dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_trash" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/timeView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_time" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/timeValueView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp"
-                tools:text="11:30" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/removeTimeButton"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="16dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_trash" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/folderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_tag" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/folderValueView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp"
-                tools:text="General" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/removeFolderButton"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="16dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_trash" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dateSuggestionsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/timeSuggestionsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/folderSuggestionsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveButton"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:padding="16dp"
-            android:text="@string/save"
-            android:textColor="?colorSecondaryVariant"
-            app:backgroundTint="@color/colorSecondaryVariant12" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_trash" />
 
     </LinearLayout>
-</layout>
+
+    <LinearLayout
+        android:id="@+id/timeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_time" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/timeValueView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="18sp"
+            tools:text="11:30" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/removeTimeButton"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_trash" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/folderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_tag" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/folderValueView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="18sp"
+            tools:text="General" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/removeFolderButton"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_trash" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dateSuggestionsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/timeSuggestionsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/folderSuggestionsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveButton"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:text="@string/save"
+        android:textColor="?colorSecondaryVariant"
+        app:backgroundTint="@color/colorSecondaryVariant12" />
+
+</LinearLayout>

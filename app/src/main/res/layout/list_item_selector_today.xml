@@ -1,71 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp">
-
-        <LinearLayout
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/date_selector_card_bg"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/dayView"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:textColor="?colorSecondaryVariant"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                tools:text="25" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/monthView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAllCaps="true"
-                android:textColor="@color/colorTextDateSubtitle"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="Jan" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/todayView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:maxLines="1"
-                android:text="@string/today"
-                android:textAllCaps="true"
-                android:textColor="?colorSecondaryVariant"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
-
-        </LinearLayout>
+        android:layout_marginTop="12dp"
+        android:background="@drawable/date_selector_card_bg"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/counterView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/date_selector_counter_bg"
+            android:id="@+id/dayView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="?colorSecondaryVariant"
-            tools:text="5" />
-    </RelativeLayout>
-</layout>
+            android:textSize="26sp"
+            android:textStyle="bold"
+            tools:text="25" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/monthView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:textColor="@color/colorTextDateSubtitle"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Jan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/todayView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:maxLines="1"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="?colorSecondaryVariant"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/counterView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/date_selector_counter_bg"
+        android:gravity="center"
+        android:textColor="?colorSecondaryVariant"
+        tools:text="5" />
+</RelativeLayout>

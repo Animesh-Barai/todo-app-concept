@@ -2,6 +2,7 @@ package com.github.naz013.todoappconcept.home.presenter
 
 import com.github.naz013.todoappconcept.arch.BasePresenter
 import com.github.naz013.todoappconcept.data.DateRange
+import com.github.naz013.todoappconcept.data.ListEvent
 import com.github.naz013.todoappconcept.home.view.HomeView
 
 interface HomePresenter : BasePresenter<HomeView> {
@@ -9,4 +10,5 @@ interface HomePresenter : BasePresenter<HomeView> {
     fun loadEvents(dateRange: DateRange)
     fun reloadEvents()
     fun addButtonClick()
+    fun eventCheck(listEvent: ListEvent, position: Int)
 }
