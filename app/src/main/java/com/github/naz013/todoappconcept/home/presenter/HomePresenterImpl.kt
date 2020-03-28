@@ -70,6 +70,7 @@ class HomePresenterImpl @Inject constructor(
 
     override fun reloadEvents() {
         dateRange?.let { loadEvents(it) }
+        loadDates()
     }
 
     override fun onDestroy() {
