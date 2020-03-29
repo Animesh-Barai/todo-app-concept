@@ -45,6 +45,13 @@ class DateSelectorView : RecyclerView {
         if (list.size > 5) {
             throw IllegalArgumentException("List cannot contain more than 5 items")
         }
+        if (this.items.size == list.size) {
+            val oldSelected = findSelected()
+            if (oldSelected != -1) {
+                list.forEach { it.isSelected = false }
+                list[oldSelected].isSelected = true
+            }
+        }
         this.items.clear()
         this.items.addAll(list)
         this.innerAdapter.notifyDataSetChanged()

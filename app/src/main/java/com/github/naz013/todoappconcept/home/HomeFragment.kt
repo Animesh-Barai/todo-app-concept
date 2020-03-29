@@ -1,5 +1,7 @@
 package com.github.naz013.todoappconcept.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,13 +38,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeView, HomePresenter>(
         }
 
         binding.addButton.setOnClickListener { presenter.addButtonClick() }
+        binding.settingButton.setOnClickListener { openGithub() }
         binding.dateSelectorView.onDateSelectedListener =
-            object : DateSelectorView.OnDateSelectedListener {
-                override fun onDateSelected(position: Int, dateItem: DateSelectorView.DateItem<*>) {
-                    onDateClicked(position, dateItem.payload)
+                object : DateSelectorView.OnDateSelectedListener {
+                    override fun onDateSelected(position: Int, dateItem: DateSelectorView.DateItem<*>) {
+                        onDateClicked(position, dateItem.payload)
+                    }
                 }
-            }
         presenter.loadDates()
+    }
+
+    private fun openGithub() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/naz013/todo-app-concept"))
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+        }
     }
 
     private fun onDateClicked(position: Int, payload: Any?) {
